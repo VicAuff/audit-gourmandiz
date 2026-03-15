@@ -1048,9 +1048,29 @@
             .navbar-cta { padding: 5px 10px; font-size: 11px; }
         }
 
-        /* Gauge animation */
+        /* Gauge animation — triggered on scroll */
         @keyframes drawGauge { from { stroke-dashoffset: 314.159; } }
-        .fill { animation: drawGauge 1.5s ease forwards; }
+        .fill { stroke-dashoffset: 314.159; }
+        .fill.animate { animation: drawGauge 1.5s ease forwards; }
+
+        /* Fade-in on scroll */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: none;
+        }
+        .reveal.visible {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        .reveal.visible:nth-child(2) { animation-delay: 0.1s; }
+        .reveal.visible:nth-child(3) { animation-delay: 0.2s; }
+        .reveal.visible:nth-child(4) { animation-delay: 0.3s; }
+        .reveal.visible:nth-child(5) { animation-delay: 0.15s; }
+        .reveal.visible:nth-child(6) { animation-delay: 0.25s; }
     </style>
 </head>
 <body>
@@ -1782,5 +1802,50 @@
     </div>
 </footer>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add .reveal class to animatable elements
+    var selectors = [
+        '.score-card', '.cwv-card', '.stat-box', '.issue-card',
+        '.reco-card', '.pricing-card', '.notion-card',
+        '.section-header', '.summary-card', '.tp-table-wrap'
+    ];
+    selectors.forEach(function(sel) {
+        document.querySelectorAll(sel).forEach(function(el) {
+            el.classList.add('reveal');
+        });
+    });
+
+    // Intersection Observer for fade-in
+    var revealObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(function(el) {
+        revealObserver.observe(el);
+    });
+
+    // Intersection Observer for gauge animations
+    var gaugeObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.querySelectorAll('.fill').forEach(function(circle) {
+                    circle.classList.add('animate');
+                });
+                gaugeObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.scores-grid').forEach(function(el) {
+        gaugeObserver.observe(el);
+    });
+});
+</script>
 </body>
 </html>
