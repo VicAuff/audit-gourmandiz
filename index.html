@@ -342,7 +342,8 @@
             fill: none;
             stroke-width: 7;
             stroke-linecap: round;
-            transition: stroke-dashoffset 1.5s ease;
+            stroke-dashoffset: 314.159;
+            transition: stroke-dashoffset 1.5s ease-out;
         }
 
         .score-ring .number {
@@ -1081,13 +1082,14 @@
 
             /* --- Pricing --- */
             .pricing-section { padding: 48px 0; }
-            .pricing-card { padding: 24px 16px; }
-            .pricing-rate .amount { font-size: 40px; }
-            .pricing-rate .per { font-size: 16px; }
+            .pricing-card { padding: 24px 16px; overflow: hidden; word-break: break-word; }
+            .pricing-rate { flex-wrap: wrap; }
+            .pricing-rate .amount { font-size: 38px; }
+            .pricing-rate .per { font-size: 14px; }
             .pricing-estimate { font-size: 13px; line-height: 1.6; }
-            .pricing-total { padding: 16px; }
-            .pricing-total .total-range { font-size: 22px; }
-            .pricing-total .total-note { font-size: 12px; }
+            .pricing-total { padding: 14px; }
+            .pricing-total .total-range { font-size: 20px; }
+            .pricing-total .total-note { font-size: 11px; }
             .pricing-list li { font-size: 12px; gap: 8px; padding: 8px 0; }
             .pricing-list .check { width: 18px; height: 18px; }
 
@@ -1119,6 +1121,7 @@
             .cta-box { padding: 28px 16px !important; border-radius: 14px !important; }
             .cta-box h2 { font-size: 22px !important; }
             .cta-box p { font-size: 13px !important; line-height: 1.7 !important; }
+            .cta-box a { padding: 12px 20px !important; font-size: 13px !important; }
 
             /* --- Footer --- */
             .footer { padding: 28px 0; }
@@ -1138,12 +1141,7 @@
             .pricing-rate .amount { font-size: 34px; }
         }
 
-        /* Gauge animation — triggered on scroll */
-        @keyframes drawGauge { from { stroke-dashoffset: 314.159; } }
-        .fill.waiting { stroke-dashoffset: 314.159 !important; }
-        .fill.animate {
-            animation: drawGauge 1.5s ease forwards;
-        }
+        /* Gauge animation — triggered on scroll via JS */
 
         /* Fade-in on scroll */
         @keyframes fadeInUp {
@@ -1225,7 +1223,7 @@
                         <circle class="track" cx="55" cy="55" r="50"/>
                         <circle class="fill s-warn" cx="55" cy="55" r="50"
                             stroke-dasharray="314.159"
-                            stroke-dashoffset="53.41"/>
+                            data-target="53.41"/>
                     </svg>
                     <div class="number c-warn">83</div>
                 </div>
@@ -1239,7 +1237,7 @@
                         <circle class="track" cx="55" cy="55" r="50"/>
                         <circle class="fill s-green" cx="55" cy="55" r="50"
                             stroke-dasharray="314.159"
-                            stroke-dashoffset="31.42"/>
+                            data-target="31.42"/>
                     </svg>
                     <div class="number c-green">90</div>
                 </div>
@@ -1253,7 +1251,7 @@
                         <circle class="track" cx="55" cy="55" r="50"/>
                         <circle class="fill s-danger" cx="55" cy="55" r="50"
                             stroke-dasharray="314.159"
-                            stroke-dashoffset="131.95"/>
+                            data-target="131.95"/>
                     </svg>
                     <div class="number c-danger">58</div>
                 </div>
@@ -1267,7 +1265,7 @@
                         <circle class="track" cx="55" cy="55" r="50"/>
                         <circle class="fill s-warn" cx="55" cy="55" r="50"
                             stroke-dasharray="314.159"
-                            stroke-dashoffset="94.25"/>
+                            data-target="94.25"/>
                     </svg>
                     <div class="number c-warn">~70</div>
                 </div>
@@ -1896,18 +1894,15 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // --- Gauge animations: set initial state then animate on scroll ---
-    // Add .waiting to all .fill circles to hide the stroke initially
-    document.querySelectorAll('.fill').forEach(function(circle) {
-        circle.classList.add('waiting');
-    });
-
+    // --- Gauge animations: transition stroke-dashoffset on scroll ---
     var gaugeObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
             if (entry.isIntersecting) {
                 entry.target.querySelectorAll('.fill').forEach(function(circle) {
-                    circle.classList.remove('waiting');
-                    circle.classList.add('animate');
+                    var target = circle.getAttribute('data-target');
+                    if (target) {
+                        circle.style.strokeDashoffset = target;
+                    }
                 });
                 gaugeObserver.unobserve(entry.target);
             }
