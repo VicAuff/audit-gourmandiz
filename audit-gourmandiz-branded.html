@@ -55,12 +55,17 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html {
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Inter', system-ui, sans-serif;
             background: var(--bg);
             color: var(--foreground);
             line-height: 1.6;
             overflow-x: hidden;
+            width: 100%;
         }
 
         body::before {
@@ -980,64 +985,97 @@
         }
 
         @media (max-width: 600px) {
-            .container { padding: 0 16px; }
+            /* Fix overflow — force everything within viewport */
+            html, body { max-width: 100vw; overflow-x: hidden; }
+            .container { padding: 0 16px; max-width: 100%; }
+            .section { overflow: hidden; }
 
             /* Navbar */
             .navbar { padding: 10px 0; }
             .navbar .container { gap: 8px; }
             .navbar-brand .name { font-size: 14px; }
             .navbar-brand .handle { display: none; }
-            .navbar-cta { padding: 6px 14px; font-size: 12px; }
+            .navbar-cta { padding: 6px 14px; font-size: 12px; white-space: nowrap; }
 
             /* Hero */
             .hero { padding: 100px 0 50px; }
+            .hero::before { width: 300px; height: 300px; }
             .hero h1 { font-size: 28px; line-height: 1.2; }
-            .hero .subtitle { font-size: 14px; }
+            .hero .subtitle { font-size: 14px; padding: 0 8px; }
             .hero-badge { font-size: 11px; padding: 5px 14px; }
-            .hero-meta { gap: 16px; }
+            .hero-meta { gap: 12px 24px; flex-wrap: wrap; justify-content: center; }
             .hero-meta-item .value { font-size: 12px; }
             .hero-meta-item .label { font-size: 10px; }
+            .platform-tag { font-size: 11px; padding: 3px 10px; }
 
             /* Sections */
             .section { padding: 48px 0; }
             .section-title { font-size: 22px; }
+            .section-label { font-size: 11px; letter-spacing: 1.5px; }
 
-            /* Scores */
+            /* Scores — full width 2 columns */
             .scores-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .score-ring { width: 80px; height: 80px; }
             .score-ring svg { width: 80px; height: 80px; }
-            .score-card { padding: 16px; }
+            .score-ring .number { font-size: 22px; }
+            .score-card { padding: 20px 12px; }
+            .score-label { font-size: 12px; }
+            .score-device { font-size: 10px; }
+
+            /* CWV */
+            .cwv-card { padding: 16px; }
+            .cwv-value { font-size: 28px; }
+            .cwv-metric-name { font-size: 12px; }
+            .cwv-desc { font-size: 10px; }
 
             /* Stats */
             .stats-row { grid-template-columns: 1fr 1fr; gap: 10px; }
-            .stat-box .stat-num { font-size: 24px; }
-            .stat-box .stat-num span { font-size: 14px !important; }
+            .stat-box { padding: 16px 12px; }
+            .stat-box .stat-num { font-size: 22px; }
+            .stat-box .stat-num span { font-size: 13px !important; }
+            .stat-box .stat-label { font-size: 12px; }
 
             /* Issues & Recos */
             .issue-card, .reco-card { padding: 16px; }
-            .issue-title { font-size: 14px; }
-            .reco-title { font-size: 14px; }
+            .issue-title { font-size: 13px; }
+            .issue-body { font-size: 12px; }
+            .issue-top { gap: 10px; }
+            .issue-icon { width: 36px; height: 36px; font-size: 16px; flex-shrink: 0; }
+            .reco-title { font-size: 13px; }
+            .reco-body { font-size: 12px; }
+            .reco-impact { font-size: 12px; }
 
-            /* Table scripts tiers */
+            /* Table scripts tiers — horizontal scroll */
             .tp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -16px; padding: 0 16px; }
             .tp-table { min-width: 500px; font-size: 13px; }
 
             /* Pricing */
-            .pricing-card { padding: 28px 20px; }
-            .pricing-rate .amount { font-size: 48px; }
-            .pricing-total .total-range { font-size: 24px; }
-            .pricing-list li { font-size: 13px; }
+            .pricing-card { padding: 28px 16px; }
+            .pricing-rate .amount { font-size: 42px; }
+            .pricing-total .total-range { font-size: 22px; }
+            .pricing-list li { font-size: 12px; gap: 8px; }
+            .pricing-estimate { font-size: 13px; }
 
-            /* Notion preview */
+            /* Notion preview — horizontal scroll */
             .notion-preview { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .notion-row { min-width: 450px; font-size: 12px; }
+            .notion-row { min-width: 420px; font-size: 12px; }
             .notion-row span { font-size: 12px; }
+            .notion-card { padding: 24px 16px; }
 
             /* Summary */
-            .summary-metrics { gap: 20px; }
-            .summary-metric .num { font-size: 32px; }
-            .summary-metric .num span { font-size: 16px !important; }
-            .summary-card { padding: 32px 20px; }
-            .summary-card h2 { font-size: 24px; }
+            .summary-metrics { gap: 16px; flex-wrap: wrap; }
+            .summary-metric .num { font-size: 28px; }
+            .summary-metric .num span { font-size: 14px !important; }
+            .summary-metric .desc { font-size: 10px; }
+            .summary-card { padding: 32px 16px; }
+            .summary-card h2 { font-size: 22px; }
+            .summary-card > p { font-size: 13px; }
+
+            /* CTA section */
+            .cta-section .container { max-width: 100% !important; padding: 0 16px; }
+            .cta-box { padding: 32px 20px !important; border-radius: 16px !important; }
+            .cta-box h2 { font-size: 24px !important; }
+            .cta-box p { font-size: 13px !important; }
         }
 
         @media (max-width: 380px) {
@@ -1046,6 +1084,7 @@
             .stats-row { grid-template-columns: 1fr; }
             .summary-metrics { flex-direction: column; align-items: center; }
             .navbar-cta { padding: 5px 10px; font-size: 11px; }
+            .pricing-rate .amount { font-size: 36px; }
         }
 
         /* Gauge animation — triggered on scroll */
@@ -1747,9 +1786,9 @@
 </section>
 
 <!-- ==================== CTA / NEXT STEP ==================== -->
-<section class="section surface-bg" style="padding:80px 0;">
+<section class="section surface-bg cta-section" style="padding:80px 0;">
     <div class="container" style="max-width:800px;">
-        <div style="background:linear-gradient(135deg, rgba(153,189,73,0.08), rgba(167,248,129,0.04));border:1px solid rgba(153,189,73,0.25);border-radius:20px;padding:56px 48px;text-align:center;position:relative;overflow:hidden;">
+        <div class="cta-box" style="background:linear-gradient(135deg, rgba(153,189,73,0.08), rgba(167,248,129,0.04));border:1px solid rgba(153,189,73,0.25);border-radius:20px;padding:56px 48px;text-align:center;position:relative;overflow:hidden;">
             <!-- Glow effect -->
             <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(153,189,73,0.15) 0%,transparent 70%);pointer-events:none;"></div>
 
