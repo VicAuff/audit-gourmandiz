@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Audit Gourmandiz.co — Tech-Everywhere</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================================
+           TECH-EVERYWHERE BRAND SYSTEM
+           Primary: #99BD49 | Glow: #A7F881 | Accent: #5F8D3B
+           Background: #0A0A0B | Surface: #18181B
+           Font: Inter
+        ============================================================ */
+
+        :root {
+            --primary: #99BD49;
+            --primary-glow: #A7F881;
+            --accent: #5F8D3B;
+            --bg: #0A0A0B;
+            --surface: #18181B;
+            --surface-50: rgba(24, 24, 27, 0.5);
+            --surface-30: rgba(24, 24, 27, 0.3);
+            --foreground: #FAFAFA;
+            --muted: #A1A1AA;
+            --border: rgba(153, 189, 73, 0.15);
+            --border-strong: rgba(153, 189, 73, 0.3);
+            --success: #99BD49;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --gradient-primary: linear-gradient(135deg, #99BD49, #A7F881, #5F8D3B);
+            --gradient-glow: radial-gradient(circle, rgba(153,189,73,0.3) 0%, transparent 70%);
+            --radius: 8px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--foreground);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 10%, rgba(153, 189, 73, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(167, 248, 129, 0.04) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+        /* ============ NAVBAR ============ */
+        .navbar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 16px 0;
+            background: rgba(10, 10, 11, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(153, 189, 73, 0.08);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .navbar-brand .name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--foreground);
+        }
+
+        .navbar-brand .handle {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 400;
+        }
+
+        .navbar-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
+            color: var(--bg);
+            padding: 8px 20px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .navbar-cta:hover {
+            background: var(--primary-glow);
+            box-shadow: 0 0 24px rgba(153, 189, 73, 0.3);
+        }
+
+        /* ============ HERO ============ */
+        .hero {
+            padding: 140px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px; height: 600px;
+            background: var(--gradient-glow);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        .hero > * { position: relative; z-index: 1; }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(153, 189, 73, 0.1);
+            border: 1px solid rgba(153, 189, 73, 0.2);
+            padding: 6px 18px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 28px;
+        }
+
+        .hero-badge .dot {
+            width: 8px; height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 60px);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 8px;
+            color: var(--foreground);
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 18px;
+            color: var(--muted);
+            max-width: 550px;
+            margin: 16px auto 36px;
+            font-weight: 400;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            text-align: center;
+        }
+
+        .hero-meta-item .value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--foreground);
+        }
+
+        .hero-meta-item .label {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .platform-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(149, 191, 71, 0.08);
+            border: 1px solid rgba(149, 191, 71, 0.2);
+            padding: 4px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #95BF47;
+        }
+
+        /* ============ SECTIONS ============ */
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section.surface-bg {
+            background: var(--surface-30);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: clamp(28px, 4vw, 48px);
+            font-weight: 700;
+            color: var(--foreground);
+        }
+
+        .section-title .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--muted);
+            margin-top: 12px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ============ SCORE CARDS ============ */
+        .scores-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .score-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 32px 20px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .score-card:hover::before { opacity: 1; }
+        .score-card:hover {
+            border-color: var(--border-strong);
+            transform: translateY(-2px);
+        }
+
+        .score-ring {
+            width: 110px; height: 110px;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+
+        .score-ring svg {
+            width: 110px; height: 110px;
+            transform: rotate(-90deg);
+        }
+
+        .score-ring .track {
+            fill: none;
+            stroke: rgba(250, 250, 250, 0.04);
+            stroke-width: 7;
+        }
+
+        .score-ring .fill {
+            fill: none;
+            stroke-width: 7;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.5s ease;
+        }
+
+        .score-ring .number {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 32px;
+            font-weight: 800;
+        }
+
+        .score-card .score-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .score-card .score-device {
+            font-size: 11px;
+            color: rgba(161, 161, 170, 0.5);
+            margin-top: 2px;
+        }
+
+        .c-green { color: var(--primary); }
+        .c-glow { color: var(--primary-glow); }
+        .c-warn { color: var(--warning); }
+        .c-danger { color: var(--danger); }
+
+        .s-green { stroke: var(--primary); }
+        .s-glow { stroke: var(--primary-glow); }
+        .s-warn { stroke: var(--warning); }
+        .s-danger { stroke: var(--danger); }
+
+        /* ============ CWV CARDS ============ */
+        .cwv-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .cwv-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+        }
+
+        .cwv-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .cwv-metric-name {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted);
+        }
+
+        .cwv-badge {
+            padding: 3px 10px;
+            border-radius: 9999px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cwv-badge.good { background: rgba(153, 189, 73, 0.15); color: var(--primary); }
+        .cwv-badge.warn { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .cwv-badge.bad { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+        .cwv-value {
+            font-size: 44px;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .cwv-unit {
+            font-size: 18px;
+            font-weight: 400;
+            opacity: 0.5;
+        }
+
+        .cwv-desc {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        .cwv-bar-track {
+            height: 5px;
+            border-radius: 3px;
+            margin-top: 16px;
+            display: flex;
+            overflow: hidden;
+            gap: 2px;
+        }
+
+        .cwv-bar-track .seg-good { flex: 1; background: var(--primary); border-radius: 3px; }
+        .cwv-bar-track .seg-warn { flex: 1; background: var(--warning); border-radius: 3px; opacity: 0.5; }
+        .cwv-bar-track .seg-bad { flex: 1; background: var(--danger); border-radius: 3px; opacity: 0.3; }
+
+        /* ============ RESOURCE STATS ============ */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 16px;
+        }
+
+        .stat-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px 16px;
+            text-align: center;
+        }
+
+        .stat-box .stat-num {
+            font-size: 32px;
+            font-weight: 800;
+        }
+
+        .stat-box .stat-label {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        .stat-box .stat-detail {
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        /* ============ ISSUE CARDS ============ */
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .issue-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            transition: all 0.3s;
+        }
+
+        .issue-card:hover {
+            border-color: var(--border-strong);
+        }
+
+        .issue-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .issue-icon {
+            width: 42px; height: 42px;
+            border-radius: var(--radius);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .issue-icon.critical { background: rgba(239, 68, 68, 0.12); }
+        .issue-icon.warn { background: rgba(245, 158, 11, 0.12); }
+        .issue-icon.ok { background: rgba(153, 189, 73, 0.12); }
+
+        .issue-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--foreground);
+        }
+
+        .issue-severity {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .issue-body {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .issue-body strong { color: var(--foreground); }
+
+        .issue-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .issue-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(250, 250, 250, 0.04);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ============ THIRD PARTIES TABLE ============ */
+        .tp-table-wrap {
+            overflow-x: auto;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+        }
+
+        .tp-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface);
+        }
+
+        .tp-table thead th {
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--primary);
+            background: rgba(153, 189, 73, 0.05);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tp-table tbody td {
+            padding: 12px 20px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(250, 250, 250, 0.03);
+        }
+
+        .tp-table tbody tr:last-child td { border-bottom: none; }
+        .tp-table tbody tr:hover { background: rgba(153, 189, 73, 0.03); }
+
+        .tp-name { font-weight: 600; color: var(--foreground); }
+
+        .tp-bar-bg {
+            width: 100%; height: 6px;
+            background: rgba(250, 250, 250, 0.04);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .tp-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        /* ============ RECO CARDS ============ */
+        .reco-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .reco-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reco-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+        }
+
+        .reco-card.high::before { background: var(--danger); }
+        .reco-card.medium::before { background: var(--warning); }
+        .reco-card.low::before { background: var(--primary); }
+
+        .reco-priority {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            padding: 3px 10px;
+            border-radius: 9999px;
+        }
+
+        .reco-card.high .reco-priority { background: rgba(239, 68, 68, 0.12); color: var(--danger); }
+        .reco-card.medium .reco-priority { background: rgba(245, 158, 11, 0.12); color: var(--warning); }
+        .reco-card.low .reco-priority { background: rgba(153, 189, 73, 0.12); color: var(--primary); }
+
+        .reco-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--foreground);
+            margin-bottom: 10px;
+        }
+
+        .reco-body {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .reco-impact {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(250, 250, 250, 0.04);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reco-impact .lbl { font-weight: 500; color: var(--muted); }
+        .reco-impact .val { font-weight: 700; }
+
+        /* ============ PRICING SECTION ============ */
+        .pricing-section {
+            padding: 80px 0;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .pricing-card {
+            background: var(--surface);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+
+        .pricing-card .pricing-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .pricing-card .pricing-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .pricing-rate {
+            display: flex;
+            align-items: baseline;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .pricing-rate .amount {
+            font-size: 52px;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .pricing-rate .per {
+            font-size: 18px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .pricing-estimate {
+            font-size: 15px;
+            color: var(--muted);
+            margin-bottom: 24px;
+            line-height: 1.7;
+        }
+
+        .pricing-estimate strong {
+            color: var(--foreground);
+        }
+
+        .pricing-total {
+            background: rgba(153, 189, 73, 0.08);
+            border: 1px solid rgba(153, 189, 73, 0.15);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+
+        .pricing-total .total-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .pricing-total .total-range {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .pricing-total .total-note {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        .pricing-list {
+            list-style: none;
+        }
+
+        .pricing-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            font-size: 14px;
+            color: var(--muted);
+            border-bottom: 1px solid rgba(250, 250, 250, 0.03);
+        }
+
+        .pricing-list li:last-child { border-bottom: none; }
+
+        .pricing-list .check {
+            width: 20px; height: 20px;
+            background: rgba(153, 189, 73, 0.15);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px;
+            color: var(--primary);
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* Notion card */
+        .notion-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 40px;
+        }
+
+        .notion-card .notion-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .notion-icon {
+            width: 48px; height: 48px;
+            background: rgba(153, 189, 73, 0.1);
+            border-radius: var(--radius);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px;
+        }
+
+        .notion-card .notion-title {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .notion-card .notion-desc {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+
+        .notion-preview {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .notion-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(250, 250, 250, 0.03);
+        }
+
+        .notion-row:first-child {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            color: var(--muted);
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .notion-row:last-child { border-bottom: none; }
+
+        .notion-status {
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .status-todo { background: rgba(250, 250, 250, 0.06); color: var(--muted); }
+        .status-progress { background: rgba(153, 189, 73, 0.15); color: var(--primary); }
+        .status-done { background: rgba(153, 189, 73, 0.25); color: var(--primary-glow); }
+
+        /* ============ SUMMARY CTA ============ */
+        .summary-section { padding: 60px 0 80px; }
+
+        .summary-card {
+            background: var(--surface);
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-xl);
+            padding: 56px 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: -200px; left: 50%;
+            transform: translateX(-50%);
+            width: 600px; height: 600px;
+            background: var(--gradient-glow);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .summary-card > * { position: relative; z-index: 1; }
+
+        .summary-card h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .summary-card p {
+            font-size: 16px;
+            color: var(--muted);
+            max-width: 600px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+
+        .summary-metrics {
+            display: flex;
+            justify-content: center;
+            gap: 56px;
+            flex-wrap: wrap;
+        }
+
+        .summary-metric {
+            text-align: center;
+        }
+
+        .summary-metric .num {
+            font-size: 44px;
+            font-weight: 900;
+        }
+
+        .summary-metric .desc {
+            font-size: 12px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer p {
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .footer .brand {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* ============ DIVIDER ============ */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 900px) {
+            .scores-grid { grid-template-columns: repeat(2, 1fr); }
+            .cwv-grid { grid-template-columns: 1fr; }
+            .issues-grid { grid-template-columns: 1fr; }
+            .reco-grid { grid-template-columns: 1fr; }
+            .stats-row { grid-template-columns: repeat(3, 1fr); }
+            .pricing-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .scores-grid { grid-template-columns: 1fr 1fr; }
+            .stats-row { grid-template-columns: 1fr 1fr; }
+            .summary-metrics { gap: 32px; }
+            .hero { padding: 120px 0 60px; }
+            .section { padding: 60px 0; }
+        }
+
+        /* Gauge animation */
+        @keyframes drawGauge { from { stroke-dashoffset: 314.159; } }
+        .fill { animation: drawGauge 1.5s ease forwards; }
+    </style>
+</head>
+<body>
+
+<!-- ==================== NAVBAR ==================== -->
+<nav class="navbar">
+    <div class="container">
+        <a href="https://tech-everywhere.fr" class="navbar-brand" target="_blank">
+            <span class="name">Victor A.</span>
+            <span class="handle">@Tech-Everywhere</span>
+        </a>
+        <a href="https://tech-everywhere.fr/#contact" class="navbar-cta" target="_blank">R&eacute;server un appel &rarr;</a>
+    </div>
+</nav>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Audit Performance & SEO
+        </div>
+        <h1>Audit complet de<br><span class="highlight">Gourmandiz.co</span></h1>
+        <p class="subtitle">Analyse d&eacute;taill&eacute;e des performances, du SEO et de l'accessibilit&eacute; de votre site e-commerce</p>
+        <div class="hero-meta">
+            <div class="hero-meta-item">
+                <div class="platform-tag">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="#95BF47"><path d="M15.337 3.415c-.144-.092-.288-.046-.336.098-.048.143-.48 1.004-.72 1.34-.192-.576-.528-1.1-1.152-1.1h-.048C12.793 3.417 12.505 3.225 12.265 3.225c-2.16 0-3.216 2.736-3.552 4.128-.864.288-1.488.48-1.536.504-.48.144-.48.168-.528.624C6.601 8.865 5.257 19.857 5.257 19.857L15.697 21.81V3.418c-.144-.003-.24-.003-.36-.003z"/><path d="M16.657 3.562v-.144c0-.048 0-.096-.024-.168-.384-1.872-1.68-2.472-2.88-2.496.024 0 .048.024.072.024.624 0 .912.192 1.2.528.624 0 .96.528 1.152 1.1.24-.336.672-1.2.72-1.34.048-.144.192-.19.336-.098.12 0 .216 0 .36.003V21.81l2.592-.528S17.785 4.866 17.761 4.722c-.024-.144-.12-.24-.264-.264-.144-.024-.552-.096-.84-.096z" opacity=".5" fill="#5E8E3E"/></svg>
+                    Shopify
+                </div>
+            </div>
+            <div class="hero-meta-item">
+                <div class="value">15 mars 2026</div>
+                <div class="label">Date de l'audit</div>
+            </div>
+            <div class="hero-meta-item">
+                <div class="value">gourmandiz.co</div>
+                <div class="label">Page d'accueil</div>
+            </div>
+            <div class="hero-meta-item">
+                <div class="value">Fullstack Premium</div>
+                <div class="label">Th&egrave;me Shopify</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== SCORES ==================== -->
+<section class="section surface-bg">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Scores Lighthouse</div>
+            <div class="section-title">Vue d'ensemble des <span class="highlight">scores</span></div>
+        </div>
+        <div class="scores-grid">
+            <!-- SEO 83 -->
+            <div class="score-card">
+                <div class="score-ring">
+                    <svg viewBox="0 0 110 110">
+                        <circle class="track" cx="55" cy="55" r="50"/>
+                        <circle class="fill s-warn" cx="55" cy="55" r="50"
+                            stroke-dasharray="314.159"
+                            stroke-dashoffset="53.41"/>
+                    </svg>
+                    <div class="number c-warn">83</div>
+                </div>
+                <div class="score-label">SEO</div>
+                <div class="score-device">Mobile & Desktop</div>
+            </div>
+            <!-- Accessibility 90 -->
+            <div class="score-card">
+                <div class="score-ring">
+                    <svg viewBox="0 0 110 110">
+                        <circle class="track" cx="55" cy="55" r="50"/>
+                        <circle class="fill s-green" cx="55" cy="55" r="50"
+                            stroke-dasharray="314.159"
+                            stroke-dashoffset="31.42"/>
+                    </svg>
+                    <div class="number c-green">90</div>
+                </div>
+                <div class="score-label">Accessibilit&eacute;</div>
+                <div class="score-device">Mobile & Desktop</div>
+            </div>
+            <!-- Best Practices 58 -->
+            <div class="score-card">
+                <div class="score-ring">
+                    <svg viewBox="0 0 110 110">
+                        <circle class="track" cx="55" cy="55" r="50"/>
+                        <circle class="fill s-danger" cx="55" cy="55" r="50"
+                            stroke-dasharray="314.159"
+                            stroke-dashoffset="131.95"/>
+                    </svg>
+                    <div class="number c-danger">58</div>
+                </div>
+                <div class="score-label">Bonnes pratiques</div>
+                <div class="score-device">Mobile & Desktop</div>
+            </div>
+            <!-- Performance ~70 -->
+            <div class="score-card">
+                <div class="score-ring">
+                    <svg viewBox="0 0 110 110">
+                        <circle class="track" cx="55" cy="55" r="50"/>
+                        <circle class="fill s-warn" cx="55" cy="55" r="50"
+                            stroke-dasharray="314.159"
+                            stroke-dashoffset="94.25"/>
+                    </svg>
+                    <div class="number c-warn">~70</div>
+                </div>
+                <div class="score-label">Performance</div>
+                <div class="score-device">Estim&eacute; CrUX</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CORE WEB VITALS ==================== -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Core Web Vitals</div>
+            <div class="section-title">M&eacute;triques <span class="highlight">utilisateurs r&eacute;els</span></div>
+            <div class="section-subtitle">Donn&eacute;es CrUX (Chrome User Experience Report) - P75</div>
+        </div>
+        <div class="cwv-grid">
+            <!-- LCP -->
+            <div class="cwv-card">
+                <div class="cwv-top">
+                    <div class="cwv-metric-name">LCP &middot; Largest Contentful Paint</div>
+                    <div class="cwv-badge good">Bon</div>
+                </div>
+                <div class="cwv-value c-green">1.3<span class="cwv-unit">s</span></div>
+                <div class="cwv-desc">Seuil : &lt; 2.5s (bon) &bull; &lt; 4s (moyen) &bull; &gt; 4s (mauvais)</div>
+                <div class="cwv-bar-track">
+                    <div class="seg-good"></div>
+                    <div class="seg-warn"></div>
+                    <div class="seg-bad"></div>
+                </div>
+            </div>
+            <!-- INP -->
+            <div class="cwv-card">
+                <div class="cwv-top">
+                    <div class="cwv-metric-name">INP &middot; Interaction to Next Paint</div>
+                    <div class="cwv-badge good">Bon</div>
+                </div>
+                <div class="cwv-value c-green">147<span class="cwv-unit">ms</span></div>
+                <div class="cwv-desc">Seuil : &lt; 200ms (bon) &bull; &lt; 500ms (moyen) &bull; &gt; 500ms (mauvais)</div>
+                <div class="cwv-bar-track">
+                    <div class="seg-good"></div>
+                    <div class="seg-warn"></div>
+                    <div class="seg-bad"></div>
+                </div>
+            </div>
+            <!-- CLS -->
+            <div class="cwv-card">
+                <div class="cwv-top">
+                    <div class="cwv-metric-name">CLS &middot; Cumulative Layout Shift</div>
+                    <div class="cwv-badge warn">Limite</div>
+                </div>
+                <div class="cwv-value c-warn">0.10</div>
+                <div class="cwv-desc">Seuil : &lt; 0.1 (bon) &bull; &lt; 0.25 (moyen) &bull; &gt; 0.25 (mauvais)</div>
+                <div class="cwv-bar-track">
+                    <div class="seg-good"></div>
+                    <div class="seg-warn"></div>
+                    <div class="seg-bad"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== RESOURCE WEIGHT ==================== -->
+<section class="section surface-bg">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Poids de la page</div>
+            <div class="section-title">Analyse des <span class="highlight">ressources</span></div>
+        </div>
+        <div class="stats-row">
+            <div class="stat-box">
+                <div class="stat-num c-danger">5.1<span style="font-size:18px"> MB</span></div>
+                <div class="stat-label">Poids total</div>
+                <div class="stat-detail c-danger">297 requ&ecirc;tes</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-num c-warn">1.5<span style="font-size:18px"> MB</span></div>
+                <div class="stat-label">JavaScript</div>
+                <div class="stat-detail c-warn">142 fichiers</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-num c-danger">3.2<span style="font-size:18px"> MB</span></div>
+                <div class="stat-label">Images</div>
+                <div class="stat-detail" style="color:var(--muted)">59 images</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-num c-green">216<span style="font-size:18px"> KB</span></div>
+                <div class="stat-label">CSS</div>
+                <div class="stat-detail c-warn">67 fichiers</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-num c-green">124<span style="font-size:18px"> KB</span></div>
+                <div class="stat-label">Fonts</div>
+                <div class="stat-detail c-green">5 polices</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== SEO ISSUES ==================== -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Audit SEO</div>
+            <div class="section-title">Probl&egrave;mes <span class="highlight">identifi&eacute;s</span></div>
+        </div>
+        <div class="issues-grid">
+            <div class="issue-card">
+                <div class="issue-top">
+                    <div class="issue-icon critical">&#10060;</div>
+                    <div>
+                        <div class="issue-title">Meta description absente</div>
+                        <div class="issue-severity c-danger">Critique</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Aucune balise <strong>meta description</strong> n'est d&eacute;finie. Google g&eacute;n&egrave;re un extrait al&eacute;atoire, r&eacute;duisant consid&eacute;rablement le taux de clic dans les r&eacute;sultats de recherche.
+                </div>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-top">
+                    <div class="issue-icon critical">&#128248;</div>
+                    <div>
+                        <div class="issue-title">87% des images sans attribut alt</div>
+                        <div class="issue-severity c-danger">Critique</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    <strong>168 images sur 194</strong> n'ont pas de texte alternatif. Impact direct sur le SEO images, l'accessibilit&eacute; et la compr&eacute;hension du contenu par Google.
+                </div>
+                <div class="issue-tags">
+                    <span class="issue-tag c-danger">168/194 sans alt</span>
+                    <span class="issue-tag c-danger">87% des images</span>
+                </div>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-top">
+                    <div class="issue-icon warn">&#128279;</div>
+                    <div>
+                        <div class="issue-title">Open Graph incomplet</div>
+                        <div class="issue-severity c-warn">Important</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Pas d'<strong>og:image</strong> et l'<strong>og:description</strong> est juste "Gourmandiz". Les partages sur les r&eacute;seaux sociaux n'afficheront aucun visuel attractif.
+                </div>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-top">
+                    <div class="issue-icon warn">&#128203;</div>
+                    <div>
+                        <div class="issue-title">Maillage interne faible</div>
+                        <div class="issue-severity c-warn">Important</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    <strong>133 liens externes</strong> contre seulement <strong>53 liens internes</strong>. Ce ratio d&eacute;s&eacute;quilibr&eacute; dilue le PageRank et affaiblit le r&eacute;f&eacute;rencement.
+                </div>
+                <div class="issue-tags">
+                    <span class="issue-tag">53 internes</span>
+                    <span class="issue-tag">133 externes</span>
+                </div>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-top">
+                    <div class="issue-icon warn">&#128221;</div>
+                    <div>
+                        <div class="issue-title">H1 non optimis&eacute; pour le SEO</div>
+                        <div class="issue-severity c-warn">Moyen</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Le H1 actuel est orient&eacute; concours marketing et ne contient aucun mot-cl&eacute; SEO li&eacute; aux produits (p&acirc;te &agrave; tartiner, prot&eacute;in&eacute;e, sans sucre...).
+                </div>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-top">
+                    <div class="issue-icon ok">&#9989;</div>
+                    <div>
+                        <div class="issue-title">Donn&eacute;es structur&eacute;es en place</div>
+                        <div class="issue-severity c-green">OK</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Sch&eacute;mas <strong>Organization</strong>, <strong>WebSite</strong> et <strong>Product</strong> pr&eacute;sents. Sitemap (4 fichiers) et robots.txt correctement configur&eacute;s.
+                </div>
+                <div class="issue-tags">
+                    <span class="issue-tag c-green">Schema.org OK</span>
+                    <span class="issue-tag c-green">Sitemap OK</span>
+                    <span class="issue-tag c-green">robots.txt OK</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PERFORMANCE ISSUES ==================== -->
+<section class="section surface-bg">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Audit Performance</div>
+            <div class="section-title">Probl&egrave;mes <span class="highlight">techniques</span></div>
+        </div>
+        <div class="issues-grid">
+            <div class="issue-card">
+                <div class="issue-top">
+                    <div class="issue-icon critical">&#9889;</div>
+                    <div>
+                        <div class="issue-title">10 CSS bloquant le rendu</div>
+                        <div class="issue-severity c-danger">Critique</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    <strong>10 fichiers CSS render-blocking</strong> retardent l'affichage initial : Google Fonts, base.css, et 8 fichiers de composants (cart, cart-drawer, progression...).
+                </div>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-top">
+                    <div class="issue-icon critical">&#128230;</div>
+                    <div>
+                        <div class="issue-title">Surcharge JavaScript</div>
+                        <div class="issue-severity c-danger">Critique</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    <strong>142 fichiers JS</strong> pour <strong>1.5 MB</strong>. Impact fort sur le Time to Interactive, surtout sur mobile. Principalement caus&eacute; par les scripts tiers.
+                </div>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-top">
+                    <div class="issue-icon warn">&#127959;</div>
+                    <div>
+                        <div class="issue-title">DOM volumineux</div>
+                        <div class="issue-severity c-warn">Moyen</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    <strong>1 680 &eacute;l&eacute;ments</strong>, profondeur <strong>18 niveaux</strong>, <strong>122 enfants directs</strong> du body. Ralentit les calculs de style et les reflows.
+                </div>
+            </div>
+
+            <div class="issue-card">
+                <div class="issue-top">
+                    <div class="issue-icon warn">&#128268;</div>
+                    <div>
+                        <div class="issue-title">APIs d&eacute;pr&eacute;ci&eacute;es & cookies tiers</div>
+                        <div class="issue-severity c-warn">Moyen</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Facebook Pixel utilise une API d&eacute;pr&eacute;ci&eacute;e. <strong>3 cookies tiers</strong> d&eacute;tect&eacute;s, bient&ocirc;t bloqu&eacute;s par Chrome. Score Best Practices &agrave; 58/100.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== THIRD PARTIES ==================== -->
+<section class="section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Scripts tiers</div>
+            <div class="section-title">Impact des <span class="highlight">services externes</span></div>
+        </div>
+        <div class="tp-table-wrap">
+            <table class="tp-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Poids</th>
+                        <th>Temps CPU</th>
+                        <th>Impact visuel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="tp-name">Shopify (CDN)</span></td>
+                        <td>6.4 MB</td>
+                        <td>86 ms</td>
+                        <td><div class="tp-bar-bg"><div class="tp-bar-fill" style="width:100%;background:var(--danger)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">CloudFront</span></td>
+                        <td>1.5 MB</td>
+                        <td>&mdash;</td>
+                        <td><div class="tp-bar-bg"><div class="tp-bar-fill" style="width:23%;background:var(--warning)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Klaviyo</span></td>
+                        <td>754.7 kB</td>
+                        <td>100 ms</td>
+                        <td><div class="tp-bar-bg"><div class="tp-bar-fill" style="width:12%;background:var(--warning)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Judge.me</span></td>
+                        <td>606.5 kB</td>
+                        <td>0.6 ms</td>
+                        <td><div class="tp-bar-bg"><div class="tp-bar-fill" style="width:9%;background:var(--primary)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Facebook Pixel</span></td>
+                        <td>519.6 kB</td>
+                        <td>52 ms</td>
+                        <td><div class="tp-bar-bg"><div class="tp-bar-fill" style="width:8%;background:var(--warning)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Google Tag Manager</span></td>
+                        <td>418.5 kB</td>
+                        <td>47 ms</td>
+                        <td><div class="tp-bar-bg"><div class="tp-bar-fill" style="width:7%;background:var(--warning)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Chaty (widget)</span></td>
+                        <td>240.4 kB</td>
+                        <td>7 ms</td>
+                        <td><div class="tp-bar-bg"><div class="tp-bar-fill" style="width:4%;background:var(--primary)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Hotjar</span></td>
+                        <td>235.7 kB</td>
+                        <td>24 ms</td>
+                        <td><div class="tp-bar-bg"><div class="tp-bar-fill" style="width:4%;background:var(--primary)"></div></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== RECOMMENDATIONS ==================== -->
+<section class="section surface-bg">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Plan d'action</div>
+            <div class="section-title">Recommandations <span class="highlight">prioritaires</span></div>
+        </div>
+        <div class="reco-grid">
+            <div class="reco-card high">
+                <div class="reco-priority">Priorit&eacute; haute</div>
+                <div class="reco-title">1. Ajouter la meta description</div>
+                <div class="reco-body">R&eacute;diger une meta description de 150-160 caract&egrave;res incluant les mots-cl&eacute;s principaux : "p&acirc;te &agrave; tartiner prot&eacute;in&eacute;e", "sans sucre", "naturelle".</div>
+                <div class="reco-impact">
+                    <span class="lbl">Impact :</span>
+                    <span class="val c-green">+15-25% CTR estim&eacute;</span>
+                </div>
+            </div>
+            <div class="reco-card high">
+                <div class="reco-priority">Priorit&eacute; haute</div>
+                <div class="reco-title">2. Attributs alt sur les 168 images</div>
+                <div class="reco-body">Ajouter des textes alternatifs descriptifs incluant les noms de produits et mots-cl&eacute;s pertinents sur toutes les images.</div>
+                <div class="reco-impact">
+                    <span class="lbl">Impact :</span>
+                    <span class="val c-green">SEO images + Accessibilit&eacute;</span>
+                </div>
+            </div>
+            <div class="reco-card high">
+                <div class="reco-priority">Priorit&eacute; haute</div>
+                <div class="reco-title">3. Diff&eacute;rer les scripts tiers</div>
+                <div class="reco-body">Charger Klaviyo, Facebook, Hotjar et GTM en defer/async. &Eacute;valuer la n&eacute;cessit&eacute; de Chaty + Hotjar simultan&eacute;ment.</div>
+                <div class="reco-impact">
+                    <span class="lbl">Impact :</span>
+                    <span class="val c-green">-30% temps de chargement</span>
+                </div>
+            </div>
+            <div class="reco-card medium">
+                <div class="reco-priority">Priorit&eacute; moyenne</div>
+                <div class="reco-title">4. Compl&eacute;ter l'Open Graph</div>
+                <div class="reco-body">Ajouter une og:image (1200x630px) et une og:description compl&egrave;te pour un meilleur partage sur les r&eacute;seaux sociaux.</div>
+                <div class="reco-impact">
+                    <span class="lbl">Impact :</span>
+                    <span class="val c-warn">Engagement social +</span>
+                </div>
+            </div>
+            <div class="reco-card medium">
+                <div class="reco-priority">Priorit&eacute; moyenne</div>
+                <div class="reco-title">5. Corriger les CSS render-blocking</div>
+                <div class="reco-body">Inliner le CSS critique (above-the-fold) et charger les 10 CSS de composants en diff&eacute;r&eacute;. Am&eacute;liore le First Contentful Paint.</div>
+                <div class="reco-impact">
+                    <span class="lbl">Impact :</span>
+                    <span class="val c-green">FCP am&eacute;lior&eacute;</span>
+                </div>
+            </div>
+            <div class="reco-card medium">
+                <div class="reco-priority">Priorit&eacute; moyenne</div>
+                <div class="reco-title">6. Renforcer le maillage interne</div>
+                <div class="reco-body">Ajouter des liens internes vers les collections, le blog et les fiches produit. Objectif : ratio 70% interne / 30% externe.</div>
+                <div class="reco-impact">
+                    <span class="lbl">Impact :</span>
+                    <span class="val c-warn">Distribution du PageRank</span>
+                </div>
+            </div>
+            <div class="reco-card low">
+                <div class="reco-priority">Priorit&eacute; basse</div>
+                <div class="reco-title">7. Optimiser le H1</div>
+                <div class="reco-body">Inclure des mots-cl&eacute;s cibl&eacute;s dans la structure de titres tout en gardant l'aspect marketing du site.</div>
+                <div class="reco-impact">
+                    <span class="lbl">Impact :</span>
+                    <span class="val c-green">Pertinence s&eacute;mantique</span>
+                </div>
+            </div>
+            <div class="reco-card low">
+                <div class="reco-priority">Priorit&eacute; basse</div>
+                <div class="reco-title">8. Optimiser le DOM & images</div>
+                <div class="reco-body">Convertir les images en WebP/AVIF. Lazy-loader les images below-the-fold. Simplifier la structure HTML du body.</div>
+                <div class="reco-impact">
+                    <span class="lbl">Impact :</span>
+                    <span class="val c-green">CLS + Vitesse</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== PRICING ==================== -->
+<section class="section pricing-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="section-label">Estimation</div>
+            <div class="section-title">Offre <span class="highlight">d'accompagnement</span></div>
+            <div class="section-subtitle">Correction de l'ensemble des probl&egrave;mes identifi&eacute;s dans cet audit</div>
+        </div>
+        <div class="pricing-grid">
+            <!-- Pricing Card -->
+            <div class="pricing-card">
+                <div class="pricing-label">Taux horaire</div>
+                <div class="pricing-rate">
+                    <span class="amount">85&euro;</span>
+                    <span class="per">/ heure</span>
+                </div>
+                <div class="pricing-estimate">
+                    Estimation du temps de travail : <strong>1 &agrave; 2 journ&eacute;es maximum</strong> (7 &agrave; 14 heures) pour l'ensemble des corrections identifi&eacute;es. Le volume exact d&eacute;pendra de la complexit&eacute; r&eacute;elle rencontr&eacute;e.
+                </div>
+                <div class="pricing-total">
+                    <div class="total-label">Estimation tarifaire</div>
+                    <div class="total-range">595&euro; &mdash; 1 190&euro; HT</div>
+                    <div class="total-note">Facturation au temps r&eacute;el pass&eacute;, pas de surprise</div>
+                </div>
+                <ul class="pricing-list">
+                    <li>
+                        <span class="check">&#10003;</span>
+                        <span>Correction de toutes les balises SEO manquantes (meta description, Open Graph, alt images)</span>
+                    </li>
+                    <li>
+                        <span class="check">&#10003;</span>
+                        <span>Optimisation des performances (CSS render-blocking, scripts tiers, lazy loading)</span>
+                    </li>
+                    <li>
+                        <span class="check">&#10003;</span>
+                        <span>Am&eacute;lioration du maillage interne et de la structure des titres</span>
+                    </li>
+                    <li>
+                        <span class="check">&#10003;</span>
+                        <span>Correction du CLS et des layout shifts</span>
+                    </li>
+                    <li>
+                        <span class="check">&#10003;</span>
+                        <span>Mise en conformit&eacute; Best Practices (cookies tiers, APIs d&eacute;pr&eacute;ci&eacute;es)</span>
+                    </li>
+                    <li>
+                        <span class="check">&#10003;</span>
+                        <span>Rapport de validation post-corrections avec scores mis &agrave; jour</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Notion Card -->
+            <div class="notion-card">
+                <div class="notion-header">
+                    <div class="notion-icon">&#128203;</div>
+                    <div>
+                        <div class="notion-title">Suivi en temps r&eacute;el</div>
+                    </div>
+                </div>
+                <div class="notion-desc">
+                    Vous recevrez un acc&egrave;s &agrave; une <strong>interface Notion d&eacute;di&eacute;e</strong> vous permettant de suivre en direct l'avancement de chaque modification, le temps allou&eacute; &agrave; chaque t&acirc;che et le statut de chaque correction.
+                </div>
+
+                <!-- Notion preview mockup -->
+                <div class="notion-preview">
+                    <div class="notion-row">
+                        <span>T&acirc;che</span>
+                        <span>Statut</span>
+                        <span>Priorit&eacute;</span>
+                        <span>Temps</span>
+                    </div>
+                    <div class="notion-row">
+                        <span style="color:var(--foreground)">Meta description</span>
+                        <span><span class="notion-status status-done">Termin&eacute;</span></span>
+                        <span class="c-danger" style="font-size:12px">Haute</span>
+                        <span style="color:var(--muted);font-size:13px">0.5h</span>
+                    </div>
+                    <div class="notion-row">
+                        <span style="color:var(--foreground)">Attributs alt images</span>
+                        <span><span class="notion-status status-progress">En cours</span></span>
+                        <span class="c-danger" style="font-size:12px">Haute</span>
+                        <span style="color:var(--muted);font-size:13px">2h</span>
+                    </div>
+                    <div class="notion-row">
+                        <span style="color:var(--foreground)">Scripts tiers defer</span>
+                        <span><span class="notion-status status-todo">&#192; faire</span></span>
+                        <span class="c-danger" style="font-size:12px">Haute</span>
+                        <span style="color:var(--muted);font-size:13px">1.5h</span>
+                    </div>
+                    <div class="notion-row">
+                        <span style="color:var(--foreground)">Open Graph</span>
+                        <span><span class="notion-status status-todo">&#192; faire</span></span>
+                        <span class="c-warn" style="font-size:12px">Moyenne</span>
+                        <span style="color:var(--muted);font-size:13px">0.5h</span>
+                    </div>
+                    <div class="notion-row">
+                        <span style="color:var(--foreground)">CSS render-blocking</span>
+                        <span><span class="notion-status status-todo">&#192; faire</span></span>
+                        <span class="c-warn" style="font-size:12px">Moyenne</span>
+                        <span style="color:var(--muted);font-size:13px">1.5h</span>
+                    </div>
+                    <div class="notion-row">
+                        <span style="color:var(--foreground)">Maillage interne</span>
+                        <span><span class="notion-status status-todo">&#192; faire</span></span>
+                        <span class="c-warn" style="font-size:12px">Moyenne</span>
+                        <span style="color:var(--muted);font-size:13px">1h</span>
+                    </div>
+                </div>
+
+                <div style="margin-top:20px;padding:16px;background:rgba(153,189,73,0.06);border-radius:8px;border:1px solid rgba(153,189,73,0.12)">
+                    <div style="font-size:13px;font-weight:600;color:var(--primary);margin-bottom:4px">Transparence totale</div>
+                    <div style="font-size:13px;color:var(--muted);line-height:1.6">Chaque heure est trac&eacute;e et visible. Vous ne payez que le temps r&eacute;ellement pass&eacute; sur votre projet. Aucun co&ucirc;t cach&eacute;.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== SUMMARY ==================== -->
+<section class="summary-section">
+    <div class="container">
+        <div class="summary-card">
+            <h2>R&eacute;sum&eacute; de l'audit</h2>
+            <p>Gourmandiz.co a de bonnes bases (Core Web Vitals corrects, HTTPS, donn&eacute;es structur&eacute;es) mais des lacunes SEO majeures et un poids de page &eacute;lev&eacute; qui freinent sa visibilit&eacute; et ses conversions.</p>
+            <div class="summary-metrics">
+                <div class="summary-metric">
+                    <div class="num c-danger">9</div>
+                    <div class="desc">Probl&egrave;mes</div>
+                </div>
+                <div class="summary-metric">
+                    <div class="num c-warn">5.1<span style="font-size:20px">MB</span></div>
+                    <div class="desc">Poids page</div>
+                </div>
+                <div class="summary-metric">
+                    <div class="num c-danger">87<span style="font-size:20px">%</span></div>
+                    <div class="desc">Images sans alt</div>
+                </div>
+                <div class="summary-metric">
+                    <div class="num c-green">3/3</div>
+                    <div class="desc">CWV OK</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== CTA / NEXT STEP ==================== -->
+<section class="section surface-bg" style="padding:80px 0;">
+    <div class="container" style="max-width:800px;">
+        <div style="background:linear-gradient(135deg, rgba(153,189,73,0.08), rgba(167,248,129,0.04));border:1px solid rgba(153,189,73,0.25);border-radius:20px;padding:56px 48px;text-align:center;position:relative;overflow:hidden;">
+            <!-- Glow effect -->
+            <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(153,189,73,0.15) 0%,transparent 70%);pointer-events:none;"></div>
+
+            <div style="display:inline-block;padding:6px 16px;background:rgba(153,189,73,0.1);border:1px solid rgba(153,189,73,0.2);border-radius:50px;font-size:12px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:24px;">Prochaine &eacute;tape</div>
+
+            <h2 style="font-size:32px;font-weight:800;color:var(--foreground);margin-bottom:16px;line-height:1.3;">Passons &agrave; l'action<br><span style="background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">ensemble</span></h2>
+
+            <p style="color:var(--muted);font-size:15px;line-height:1.8;max-width:560px;margin:0 auto 32px;">
+                Tous les probl&egrave;mes identifi&eacute;s dans cet audit sont corrigeables en <strong style="color:var(--foreground);">1 &agrave; 2 journ&eacute;es</strong>. Vous b&eacute;n&eacute;ficiez d'un suivi transparent via un <strong style="color:var(--foreground);">espace Notion partag&eacute;</strong> : worklog, tickets, temps pass&eacute; en direct &mdash; z&eacute;ro surprise.
+            </p>
+
+            <!-- Key points -->
+            <div style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:40px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="color:var(--primary);font-size:18px;">&#128337;</span>
+                    <span style="font-size:13px;color:var(--muted);">Facturation au <strong style="color:var(--foreground);">temps r&eacute;el</strong></span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="color:var(--primary);font-size:18px;">&#128203;</span>
+                    <span style="font-size:13px;color:var(--muted);">Acc&egrave;s <strong style="color:var(--foreground);">Notion en direct</strong></span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="color:var(--primary);font-size:18px;">&#9989;</span>
+                    <span style="font-size:13px;color:var(--muted);">Rapport de validation <strong style="color:var(--foreground);">post-corrections</strong></span>
+                </div>
+            </div>
+
+            <!-- CTA buttons -->
+            <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:32px;">
+                <a href="https://tech-everywhere.fr/#contact" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:var(--gradient-primary);color:#0A0A0B;font-weight:700;font-size:15px;border-radius:12px;text-decoration:none;transition:transform 0.2s;box-shadow:0 4px 24px rgba(153,189,73,0.3);">
+                    &#128222; R&eacute;server un appel
+                </a>
+                <a href="mailto:contact@tech-everywhere.fr?subject=Suite%20audit%20Gourmandiz.co" style="display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:transparent;color:var(--primary);font-weight:600;font-size:15px;border-radius:12px;text-decoration:none;border:1px solid rgba(153,189,73,0.3);transition:all 0.2s;">
+                    &#9993; Contacter par email
+                </a>
+            </div>
+
+            <p style="font-size:13px;color:var(--muted);opacity:0.7;">
+                D&eacute;couvrez notre approche sur <a href="https://tech-everywhere.fr" target="_blank" style="color:var(--primary);text-decoration:underline;">tech-everywhere.fr</a>
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+    <div class="container">
+        <p>Audit r&eacute;alis&eacute; par <span class="brand">Victor A. @Tech-Everywhere</span> &mdash; 15 mars 2026</p>
+        <p style="margin-top:6px;opacity:0.4;font-size:12px">Donn&eacute;es : Lighthouse &bull; Chrome DevTools Performance Trace &bull; CrUX</p>
+    </div>
+</footer>
+
+</body>
+</html>
