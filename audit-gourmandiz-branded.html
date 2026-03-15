@@ -1140,8 +1140,10 @@
 
         /* Gauge animation — triggered on scroll */
         @keyframes drawGauge { from { stroke-dashoffset: 314.159; } }
-        .fill { stroke-dashoffset: 314.159; }
-        .fill.animate { animation: drawGauge 1.5s ease forwards; }
+        .fill.waiting { stroke-dashoffset: 314.159 !important; }
+        .fill.animate {
+            animation: drawGauge 1.5s ease forwards;
+        }
 
         /* Fade-in on scroll */
         @keyframes fadeInUp {
@@ -1894,19 +1896,40 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Add .reveal class to animatable elements
-    var selectors = [
+    // --- Gauge animations: set initial state then animate on scroll ---
+    // Add .waiting to all .fill circles to hide the stroke initially
+    document.querySelectorAll('.fill').forEach(function(circle) {
+        circle.classList.add('waiting');
+    });
+
+    var gaugeObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                entry.target.querySelectorAll('.fill').forEach(function(circle) {
+                    circle.classList.remove('waiting');
+                    circle.classList.add('animate');
+                });
+                gaugeObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.scores-grid').forEach(function(el) {
+        gaugeObserver.observe(el);
+    });
+
+    // --- Fade-in on scroll for cards and sections ---
+    var revealSelectors = [
         '.score-card', '.cwv-card', '.stat-box', '.issue-card',
         '.reco-card', '.pricing-card', '.notion-card',
         '.section-header', '.summary-card', '.tp-table-wrap'
     ];
-    selectors.forEach(function(sel) {
+    revealSelectors.forEach(function(sel) {
         document.querySelectorAll(sel).forEach(function(el) {
             el.classList.add('reveal');
         });
     });
 
-    // Intersection Observer for fade-in
     var revealObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
             if (entry.isIntersecting) {
@@ -1914,26 +1937,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 revealObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.1 });
 
     document.querySelectorAll('.reveal').forEach(function(el) {
         revealObserver.observe(el);
-    });
-
-    // Intersection Observer for gauge animations
-    var gaugeObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-            if (entry.isIntersecting) {
-                entry.target.querySelectorAll('.fill').forEach(function(circle) {
-                    circle.classList.add('animate');
-                });
-                gaugeObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.3 });
-
-    document.querySelectorAll('.scores-grid').forEach(function(el) {
-        gaugeObserver.observe(el);
     });
 });
 </script>
