@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Performance & SEO - Gourmandiz.co</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        :root {
+            --primary: #6C3CE1;
+            --primary-light: #8B5CF6;
+            --primary-dark: #4C1D95;
+            --accent: #F59E0B;
+            --accent-light: #FCD34D;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --danger-light: #FCA5A5;
+            --bg: #0F0F1A;
+            --bg-card: #1A1A2E;
+            --bg-card-alt: #16213E;
+            --text: #E2E8F0;
+            --text-muted: #94A3B8;
+            --border: rgba(108, 60, 225, 0.2);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(108, 60, 225, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        /* ============ HERO ============ */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(108, 60, 225, 0.15);
+            border: 1px solid rgba(108, 60, 225, 0.3);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-light);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 24px;
+        }
+
+        .hero-badge .dot {
+            width: 8px; height: 8px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, var(--primary-light) 50%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 32px;
+            font-weight: 300;
+        }
+
+        .hero-meta {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .hero-meta-item .icon {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px;
+        }
+
+        .hero-meta-item .icon.shopify { background: rgba(149, 191, 71, 0.15); }
+        .hero-meta-item .icon.date { background: rgba(108, 60, 225, 0.15); }
+        .hero-meta-item .icon.url { background: rgba(245, 158, 11, 0.15); }
+
+        /* ============ SCORE OVERVIEW ============ */
+        .scores-section { padding: 40px 0; }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-header .label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary-light);
+            margin-bottom: 12px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .scores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .score-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px 24px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .score-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .score-circle {
+            width: 120px; height: 120px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .score-circle svg {
+            width: 120px; height: 120px;
+            transform: rotate(-90deg);
+        }
+
+        .score-circle .bg {
+            fill: none;
+            stroke: rgba(255,255,255,0.05);
+            stroke-width: 8;
+        }
+
+        .score-circle .progress {
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.5s ease;
+        }
+
+        .score-circle .value {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 36px;
+            font-weight: 800;
+        }
+
+        .score-card .label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .score-card .device {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            opacity: 0.6;
+        }
+
+        .color-danger { color: var(--danger); }
+        .color-warning { color: var(--warning); }
+        .color-success { color: var(--success); }
+
+        .stroke-danger { stroke: var(--danger); }
+        .stroke-warning { stroke: var(--warning); }
+        .stroke-success { stroke: var(--success); }
+
+        /* ============ CORE WEB VITALS ============ */
+        .cwv-section { padding: 40px 0; }
+
+        .cwv-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .cwv-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            position: relative;
+        }
+
+        .cwv-card .cwv-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .cwv-card .cwv-name {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .cwv-card .cwv-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-good { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .badge-warning { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .badge-bad { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+
+        .cwv-card .cwv-value {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .cwv-card .cwv-unit {
+            font-size: 18px;
+            font-weight: 400;
+            opacity: 0.6;
+        }
+
+        .cwv-card .cwv-threshold {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        .cwv-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+            margin-top: 16px;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .cwv-bar .good { background: var(--success); }
+        .cwv-bar .warn { background: var(--warning); }
+        .cwv-bar .bad { background: var(--danger); }
+
+        .cwv-bar-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4px;
+            font-size: 10px;
+            color: var(--text-muted);
+        }
+
+        /* ============ ISSUES ============ */
+        .issues-section { padding: 40px 0; }
+
+        .issues-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .issue-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            transition: transform 0.3s;
+        }
+
+        .issue-card:hover { transform: translateY(-2px); }
+
+        .issue-card .issue-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .issue-card .issue-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .issue-icon.critical { background: rgba(239, 68, 68, 0.15); }
+        .issue-icon.warning { background: rgba(245, 158, 11, 0.15); }
+        .issue-icon.info { background: rgba(108, 60, 225, 0.15); }
+        .issue-icon.success { background: rgba(16, 185, 129, 0.15); }
+
+        .issue-card .issue-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .issue-card .issue-severity {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .issue-card .issue-body {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .issue-card .issue-body strong {
+            color: var(--text);
+        }
+
+        .issue-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.05);
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 12px;
+            margin-right: 8px;
+        }
+
+        /* ============ THIRD PARTIES ============ */
+        .third-party-section { padding: 40px 0; }
+
+        .tp-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .tp-table thead th {
+            background: rgba(108, 60, 225, 0.1);
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary-light);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tp-table tbody td {
+            padding: 14px 20px;
+            font-size: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .tp-table tbody tr:last-child td { border-bottom: none; }
+
+        .tp-table tbody tr:hover { background: rgba(108, 60, 225, 0.05); }
+
+        .tp-bar-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .tp-bar {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .tp-name {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* ============ RECOMMENDATIONS ============ */
+        .reco-section { padding: 40px 0 80px; }
+
+        .reco-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .reco-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reco-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+
+        .reco-card.high::before { background: linear-gradient(90deg, var(--danger), #F97316); }
+        .reco-card.medium::before { background: linear-gradient(90deg, var(--warning), #FBBF24); }
+        .reco-card.low::before { background: linear-gradient(90deg, var(--success), #34D399); }
+
+        .reco-card .reco-priority {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+
+        .reco-card.high .reco-priority { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+        .reco-card.medium .reco-priority { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+        .reco-card.low .reco-priority { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+
+        .reco-card .reco-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+
+        .reco-card .reco-body {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .reco-card .reco-impact {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reco-impact .impact-label {
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .reco-impact .impact-value {
+            font-weight: 700;
+        }
+
+        /* ============ SUMMARY / CTA ============ */
+        .summary-section {
+            padding: 60px 0 80px;
+        }
+
+        .summary-card {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #1E1B4B 100%);
+            border: 1px solid rgba(108, 60, 225, 0.3);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .summary-card > * { position: relative; z-index: 1; }
+
+        .summary-card h2 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .summary-card p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            max-width: 700px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        .summary-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .summary-stat {
+            text-align: center;
+        }
+
+        .summary-stat .num {
+            font-size: 48px;
+            font-weight: 900;
+        }
+
+        .summary-stat .desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .footer .brand {
+            font-weight: 700;
+            color: var(--primary-light);
+        }
+
+        /* ============ DIVIDER ============ */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 20px 0;
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .hero { padding: 48px 0 32px; }
+            .hero-meta { gap: 16px; }
+            .scores-grid { grid-template-columns: repeat(2, 1fr); }
+            .cwv-grid { grid-template-columns: 1fr; }
+            .issues-grid { grid-template-columns: 1fr; }
+            .reco-grid { grid-template-columns: 1fr; }
+            .summary-card { padding: 32px 24px; }
+            .summary-stats { gap: 24px; }
+            .tp-table { font-size: 12px; }
+        }
+
+        /* ============ Platform badge ============ */
+        .platform-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(149, 191, 71, 0.1);
+            border: 1px solid rgba(149, 191, 71, 0.3);
+            padding: 6px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #95BF47;
+        }
+
+        .platform-badge svg { width: 18px; height: 18px; }
+
+        /* Gauge animation */
+        @keyframes gaugeAnim {
+            from { stroke-dashoffset: 339.292; }
+        }
+
+        .progress { animation: gaugeAnim 1.5s ease forwards; }
+
+        /* Table responsive wrapper */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-badge">
+            <span class="dot"></span>
+            Audit Performance & SEO
+        </div>
+        <h1>Gourmandiz.co</h1>
+        <p class="subtitle">Analyse compl&egrave;te des performances, de l'accessibilit&eacute; et du r&eacute;f&eacute;rencement naturel</p>
+        <div class="hero-meta">
+            <div class="hero-meta-item">
+                <div class="icon shopify">&#x1F6D2;</div>
+                <div>
+                    <strong style="color:#95BF47">Shopify</strong>
+                    <div style="font-size:11px;opacity:0.6">Theme Fullstack Premium</div>
+                </div>
+            </div>
+            <div class="hero-meta-item">
+                <div class="icon date">&#128197;</div>
+                <div>
+                    <strong style="color:#fff">15 mars 2026</strong>
+                    <div style="font-size:11px;opacity:0.6">Date de l'audit</div>
+                </div>
+            </div>
+            <div class="hero-meta-item">
+                <div class="icon url">&#127760;</div>
+                <div>
+                    <strong style="color:#fff">gourmandiz.co</strong>
+                    <div style="font-size:11px;opacity:0.6">Page d'accueil</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== SCORES LIGHTHOUSE ==================== -->
+<section class="scores-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="label">Scores Lighthouse</div>
+            <h2>Vue d'ensemble des scores</h2>
+        </div>
+        <div class="scores-grid">
+            <!-- SEO -->
+            <div class="score-card">
+                <div class="score-circle">
+                    <svg viewBox="0 0 120 120">
+                        <circle class="bg" cx="60" cy="60" r="54"/>
+                        <circle class="progress stroke-warning" cx="60" cy="60" r="54"
+                            stroke-dasharray="339.292"
+                            stroke-dashoffset="57.68"/>
+                    </svg>
+                    <div class="value color-warning">83</div>
+                </div>
+                <div class="label">SEO</div>
+                <div class="device">Mobile & Desktop</div>
+            </div>
+            <!-- Accessibilite -->
+            <div class="score-card">
+                <div class="score-circle">
+                    <svg viewBox="0 0 120 120">
+                        <circle class="bg" cx="60" cy="60" r="54"/>
+                        <circle class="progress stroke-success" cx="60" cy="60" r="54"
+                            stroke-dasharray="339.292"
+                            stroke-dashoffset="33.93"/>
+                    </svg>
+                    <div class="value color-success">90</div>
+                </div>
+                <div class="label">Accessibilit&eacute;</div>
+                <div class="device">Mobile & Desktop</div>
+            </div>
+            <!-- Best Practices -->
+            <div class="score-card">
+                <div class="score-circle">
+                    <svg viewBox="0 0 120 120">
+                        <circle class="bg" cx="60" cy="60" r="54"/>
+                        <circle class="progress stroke-danger" cx="60" cy="60" r="54"
+                            stroke-dasharray="339.292"
+                            stroke-dashoffset="142.50"/>
+                    </svg>
+                    <div class="value color-danger">58</div>
+                </div>
+                <div class="label">Bonnes pratiques</div>
+                <div class="device">Mobile & Desktop</div>
+            </div>
+            <!-- Performance estimate -->
+            <div class="score-card">
+                <div class="score-circle">
+                    <svg viewBox="0 0 120 120">
+                        <circle class="bg" cx="60" cy="60" r="54"/>
+                        <circle class="progress stroke-warning" cx="60" cy="60" r="54"
+                            stroke-dasharray="339.292"
+                            stroke-dashoffset="101.79"/>
+                    </svg>
+                    <div class="value color-warning">~70</div>
+                </div>
+                <div class="label">Performance</div>
+                <div class="device">Estim&eacute; (CrUX)</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ==================== CORE WEB VITALS ==================== -->
+<section class="cwv-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="label">Core Web Vitals</div>
+            <h2>M&eacute;triques utilisateurs r&eacute;els (CrUX)</h2>
+        </div>
+        <div class="cwv-grid">
+            <!-- LCP -->
+            <div class="cwv-card">
+                <div class="cwv-header">
+                    <div class="cwv-name">&#9201; Largest Contentful Paint</div>
+                    <div class="cwv-badge badge-good">Bon</div>
+                </div>
+                <div class="cwv-value color-success">1.3<span class="cwv-unit">s</span></div>
+                <div class="cwv-threshold">Seuil : &lt; 2.5s (bon) | &lt; 4s (moyen) | &gt; 4s (mauvais)</div>
+                <div class="cwv-bar">
+                    <div class="good" style="width:75%"></div>
+                    <div class="warn" style="width:20%"></div>
+                    <div class="bad" style="width:5%"></div>
+                </div>
+                <div class="cwv-bar-labels">
+                    <span>0s</span>
+                    <span>2.5s</span>
+                    <span>4s</span>
+                </div>
+            </div>
+            <!-- INP -->
+            <div class="cwv-card">
+                <div class="cwv-header">
+                    <div class="cwv-name">&#9757; Interaction to Next Paint</div>
+                    <div class="cwv-badge badge-good">Bon</div>
+                </div>
+                <div class="cwv-value color-success">147<span class="cwv-unit">ms</span></div>
+                <div class="cwv-threshold">Seuil : &lt; 200ms (bon) | &lt; 500ms (moyen) | &gt; 500ms (mauvais)</div>
+                <div class="cwv-bar">
+                    <div class="good" style="width:70%"></div>
+                    <div class="warn" style="width:22%"></div>
+                    <div class="bad" style="width:8%"></div>
+                </div>
+                <div class="cwv-bar-labels">
+                    <span>0ms</span>
+                    <span>200ms</span>
+                    <span>500ms</span>
+                </div>
+            </div>
+            <!-- CLS -->
+            <div class="cwv-card">
+                <div class="cwv-header">
+                    <div class="cwv-name">&#8596; Cumulative Layout Shift</div>
+                    <div class="cwv-badge badge-warning">Limite</div>
+                </div>
+                <div class="cwv-value color-warning">0.10</div>
+                <div class="cwv-threshold">Seuil : &lt; 0.1 (bon) | &lt; 0.25 (moyen) | &gt; 0.25 (mauvais)</div>
+                <div class="cwv-bar">
+                    <div class="good" style="width:40%"></div>
+                    <div class="warn" style="width:40%"></div>
+                    <div class="bad" style="width:20%"></div>
+                </div>
+                <div class="cwv-bar-labels">
+                    <span>0</span>
+                    <span>0.1</span>
+                    <span>0.25</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ==================== RESOURCE WEIGHT ==================== -->
+<section class="issues-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="label">Poids de la page</div>
+            <h2>Analyse des ressources charg&eacute;es</h2>
+        </div>
+        <div class="scores-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));">
+            <div class="score-card" style="padding:24px">
+                <div style="font-size:36px;font-weight:900;color:var(--danger)">5.1</div>
+                <div style="font-size:14px;color:var(--text-muted);font-weight:600">MB Total</div>
+                <div style="font-size:11px;color:var(--danger);margin-top:4px">297 requ&ecirc;tes</div>
+            </div>
+            <div class="score-card" style="padding:24px">
+                <div style="font-size:36px;font-weight:900;color:var(--warning)">1.5</div>
+                <div style="font-size:14px;color:var(--text-muted);font-weight:600">MB JavaScript</div>
+                <div style="font-size:11px;color:var(--warning);margin-top:4px">142 fichiers</div>
+            </div>
+            <div class="score-card" style="padding:24px">
+                <div style="font-size:36px;font-weight:900;color:var(--danger)">3.2</div>
+                <div style="font-size:14px;color:var(--text-muted);font-weight:600">MB Images</div>
+                <div style="font-size:11px;color:var(--text-muted);margin-top:4px">59 images</div>
+            </div>
+            <div class="score-card" style="padding:24px">
+                <div style="font-size:36px;font-weight:900;color:var(--success)">216</div>
+                <div style="font-size:14px;color:var(--text-muted);font-weight:600">KB CSS</div>
+                <div style="font-size:11px;color:var(--warning);margin-top:4px">67 fichiers</div>
+            </div>
+            <div class="score-card" style="padding:24px">
+                <div style="font-size:36px;font-weight:900;color:var(--success)">124</div>
+                <div style="font-size:14px;color:var(--text-muted);font-weight:600">KB Fonts</div>
+                <div style="font-size:11px;color:var(--success);margin-top:4px">5 polices</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ==================== SEO ISSUES ==================== -->
+<section class="issues-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="label">Audit SEO</div>
+            <h2>Probl&egrave;mes identifi&eacute;s</h2>
+        </div>
+        <div class="issues-grid">
+            <!-- Meta description -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-icon critical">&#10060;</div>
+                    <div>
+                        <div class="issue-title">Meta description absente</div>
+                        <div class="issue-severity color-danger">Critique</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Aucune balise <strong>meta description</strong> n'est d&eacute;finie sur la page d'accueil. C'est le texte qui appara&icirc;t sous le titre dans les r&eacute;sultats Google. Sans elle, Google g&eacute;n&egrave;re un extrait al&eacute;atoire, r&eacute;duisant le taux de clic (CTR).
+                </div>
+            </div>
+
+            <!-- Alt text -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-icon critical">&#128248;</div>
+                    <div>
+                        <div class="issue-title">Images sans attribut alt</div>
+                        <div class="issue-severity color-danger">Critique</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    <strong>168 images sur 194</strong> (87%) n'ont pas d'attribut alt. Cela impacte le SEO images, l'accessibilit&eacute; et la compr&eacute;hension du contenu par Google.
+                </div>
+                <div class="issue-stat">&#128247; 168/194 sans alt</div>
+                <div class="issue-stat color-danger">&#9888; 87% des images</div>
+            </div>
+
+            <!-- OG Image -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-icon warning">&#128279;</div>
+                    <div>
+                        <div class="issue-title">Open Graph incomplet</div>
+                        <div class="issue-severity color-warning">Important</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Pas d'<strong>og:image</strong> d&eacute;finie et l'<strong>og:description</strong> est juste "Gourmandiz" au lieu d'une vraie description. Les partages sur les r&eacute;seaux sociaux n'afficheront pas de visuel attractif.
+                </div>
+            </div>
+
+            <!-- External links ratio -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-icon warning">&#128203;</div>
+                    <div>
+                        <div class="issue-title">Ratio liens internes/externes</div>
+                        <div class="issue-severity color-warning">Important</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Le site a <strong>133 liens externes</strong> contre seulement <strong>53 liens internes</strong>. Ce ratio d&eacute;s&eacute;quilibr&eacute; dilue le "link juice" et le maillage interne du site, affaiblissant le SEO on-page.
+                </div>
+                <div class="issue-stat">&#128279; 53 internes</div>
+                <div class="issue-stat">&#127760; 133 externes</div>
+            </div>
+
+            <!-- H1 -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-icon warning">&#128221;</div>
+                    <div>
+                        <div class="issue-title">Balise H1 non optimis&eacute;e</div>
+                        <div class="issue-severity color-warning">Moyen</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Le H1 actuel est <strong>"Gagne tes p&acirc;tes &agrave; tartiner"</strong> &mdash; orient&eacute; marketing/concours, il ne contient aucun mot-cl&eacute; SEO li&eacute; au produit (p&acirc;te &agrave; tartiner prot&eacute;in&eacute;e, sans sucre, healthy, etc.).
+                </div>
+            </div>
+
+            <!-- Structured data -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-icon success">&#9989;</div>
+                    <div>
+                        <div class="issue-title">Donn&eacute;es structur&eacute;es pr&eacute;sentes</div>
+                        <div class="issue-severity color-success">OK</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Les sch&eacute;mas <strong>Organization</strong>, <strong>WebSite</strong> et <strong>Product</strong> sont impl&eacute;ment&eacute;s via JSON-LD. Le sitemap (4 fichiers) et le robots.txt sont &eacute;galement en place.
+                </div>
+                <div class="issue-stat" style="color:var(--success)">&#9989; Schema.org OK</div>
+                <div class="issue-stat" style="color:var(--success)">&#9989; Sitemap OK</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ==================== PERFORMANCE ISSUES ==================== -->
+<section class="issues-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="label">Audit Performance</div>
+            <h2>Probl&egrave;mes techniques</h2>
+        </div>
+        <div class="issues-grid">
+            <!-- Render blocking -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-icon critical">&#9889;</div>
+                    <div>
+                        <div class="issue-title">10 CSS bloquant le rendu</div>
+                        <div class="issue-severity color-danger">Critique</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    <strong>10 fichiers CSS render-blocking</strong> emp&ecirc;chent l'affichage initial. Parmi eux : Google Fonts, base.css, et 8 fichiers de composants (cart, cart-drawer, progression...). Ils devraient &ecirc;tre charg&eacute;s en diff&eacute;r&eacute; ou inlin&eacute;s.
+                </div>
+            </div>
+
+            <!-- Too many scripts -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-icon critical">&#128230;</div>
+                    <div>
+                        <div class="issue-title">Surcharge JavaScript</div>
+                        <div class="issue-severity color-danger">Critique</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    <strong>142 fichiers JS</strong> pour un total de <strong>1.5 MB</strong>. Cela impacte fortement le Time to Interactive, surtout sur mobile. Beaucoup viennent des scripts tiers (Klaviyo, Facebook, Hotjar, GTM...).
+                </div>
+            </div>
+
+            <!-- DOM Size -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-icon warning">&#127959;</div>
+                    <div>
+                        <div class="issue-title">DOM volumineux</div>
+                        <div class="issue-severity color-warning">Moyen</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Le DOM contient <strong>1 680 &eacute;l&eacute;ments</strong> avec une profondeur de <strong>18 niveaux</strong> et un &eacute;l&eacute;ment (body) ayant <strong>122 enfants directs</strong>. Cela ralentit les calculs de style et les reflows.
+                </div>
+            </div>
+
+            <!-- CLS -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-icon warning">&#128200;</div>
+                    <div>
+                        <div class="issue-title">Layout Shift &agrave; la limite</div>
+                        <div class="issue-severity color-warning">Moyen</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Le CLS est &agrave; <strong>0.10</strong> en donn&eacute;es terrain (pile sur le seuil) et <strong>0.13 en lab</strong> (au-dessus du seuil). Un shift de score 0.127 se produit &agrave; 411ms, probablement d&ucirc; au chargement d'images ou de polices.
+                </div>
+            </div>
+
+            <!-- Deprecated APIs -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-icon info">&#128268;</div>
+                    <div>
+                        <div class="issue-title">APIs d&eacute;pr&eacute;ci&eacute;es & cookies tiers</div>
+                        <div class="issue-severity color-warning">Moyen</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Le pixel Facebook utilise <strong>AttributionReporting</strong> (API d&eacute;pr&eacute;ci&eacute;e). De plus, <strong>3 cookies tiers</strong> sont d&eacute;tect&eacute;s &mdash; ils seront bient&ocirc;t bloqu&eacute;s par Chrome.
+                </div>
+            </div>
+
+            <!-- Best Practices -->
+            <div class="issue-card">
+                <div class="issue-header">
+                    <div class="issue-icon critical">&#128274;</div>
+                    <div>
+                        <div class="issue-title">Score Best Practices bas (58/100)</div>
+                        <div class="issue-severity color-danger">Critique</div>
+                    </div>
+                </div>
+                <div class="issue-body">
+                    Ce score faible est principalement caus&eacute; par l'utilisation d'APIs d&eacute;pr&eacute;ci&eacute;es, les cookies tiers, et des pratiques non conformes aux standards modernes du web.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ==================== THIRD PARTIES ==================== -->
+<section class="third-party-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="label">Scripts tiers</div>
+            <h2>Impact des services externes</h2>
+        </div>
+        <div class="table-wrapper">
+            <table class="tp-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Poids transf&eacute;r&eacute;</th>
+                        <th>Temps CPU</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="tp-name">Shopify (CDN)</span></td>
+                        <td>6.4 MB</td>
+                        <td>86 ms</td>
+                        <td><div class="tp-bar-container"><div class="tp-bar" style="width:100%;background:var(--danger)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">CloudFront</span></td>
+                        <td>1.5 MB</td>
+                        <td>&mdash;</td>
+                        <td><div class="tp-bar-container"><div class="tp-bar" style="width:23%;background:var(--warning)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Klaviyo</span></td>
+                        <td>754.7 kB</td>
+                        <td>100 ms</td>
+                        <td><div class="tp-bar-container"><div class="tp-bar" style="width:12%;background:var(--warning)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Judge.me</span></td>
+                        <td>606.5 kB</td>
+                        <td>0.6 ms</td>
+                        <td><div class="tp-bar-container"><div class="tp-bar" style="width:9%;background:var(--success)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Facebook Pixel</span></td>
+                        <td>519.6 kB</td>
+                        <td>52 ms</td>
+                        <td><div class="tp-bar-container"><div class="tp-bar" style="width:8%;background:var(--warning)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Google Tag Manager</span></td>
+                        <td>418.5 kB</td>
+                        <td>47 ms</td>
+                        <td><div class="tp-bar-container"><div class="tp-bar" style="width:7%;background:var(--warning)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Chaty (chat widget)</span></td>
+                        <td>240.4 kB</td>
+                        <td>7 ms</td>
+                        <td><div class="tp-bar-container"><div class="tp-bar" style="width:4%;background:var(--success)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Hotjar</span></td>
+                        <td>235.7 kB</td>
+                        <td>24 ms</td>
+                        <td><div class="tp-bar-container"><div class="tp-bar" style="width:4%;background:var(--success)"></div></div></td>
+                    </tr>
+                    <tr>
+                        <td><span class="tp-name">Loyoly</span></td>
+                        <td>3.4 kB</td>
+                        <td>0.3 ms</td>
+                        <td><div class="tp-bar-container"><div class="tp-bar" style="width:1%;background:var(--success)"></div></div></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<div class="container"><div class="divider"></div></div>
+
+<!-- ==================== RECOMMENDATIONS ==================== -->
+<section class="reco-section">
+    <div class="container">
+        <div class="section-header">
+            <div class="label">Plan d'action</div>
+            <h2>Recommandations prioritaires</h2>
+        </div>
+        <div class="reco-grid">
+            <div class="reco-card high">
+                <div class="reco-priority">&#128308; Priorit&eacute; haute</div>
+                <div class="reco-title">1. Ajouter la meta description</div>
+                <div class="reco-body">
+                    R&eacute;diger une meta description de 150-160 caract&egrave;res incluant les mots-cl&eacute;s principaux : "p&acirc;te &agrave; tartiner prot&eacute;in&eacute;e", "sans sucre", "naturelle". Cela am&eacute;liorera le CTR dans les r&eacute;sultats de recherche.
+                </div>
+                <div class="reco-impact">
+                    <span class="impact-label">Impact :</span>
+                    <span class="impact-value color-success">+15-25% CTR estim&eacute;</span>
+                </div>
+            </div>
+
+            <div class="reco-card high">
+                <div class="reco-priority">&#128308; Priorit&eacute; haute</div>
+                <div class="reco-title">2. Optimiser les attributs alt</div>
+                <div class="reco-body">
+                    Ajouter des textes alternatifs descriptifs aux 168 images concern&eacute;es. Utiliser des descriptions incluant les noms de produits et mots-cl&eacute;s pertinents.
+                </div>
+                <div class="reco-impact">
+                    <span class="impact-label">Impact :</span>
+                    <span class="impact-value color-success">SEO images + Accessibilit&eacute;</span>
+                </div>
+            </div>
+
+            <div class="reco-card high">
+                <div class="reco-priority">&#128308; Priorit&eacute; haute</div>
+                <div class="reco-title">3. R&eacute;duire les scripts tiers</div>
+                <div class="reco-body">
+                    Charger Klaviyo, Facebook, Hotjar et GTM en diff&eacute;r&eacute; (defer/async). &Eacute;valuer si Chaty et Hotjar sont n&eacute;cessaires simultan&eacute;ment. &Eacute;conomie potentielle : ~400-600 kB.
+                </div>
+                <div class="reco-impact">
+                    <span class="impact-label">Impact :</span>
+                    <span class="impact-value color-success">-30% temps de chargement</span>
+                </div>
+            </div>
+
+            <div class="reco-card medium">
+                <div class="reco-priority">&#128992; Priorit&eacute; moyenne</div>
+                <div class="reco-title">4. Compl&eacute;ter les balises Open Graph</div>
+                <div class="reco-body">
+                    Ajouter une og:image attractive (1200x630px) et r&eacute;diger une og:description compl&egrave;te. Chaque partage sur les r&eacute;seaux sociaux sera plus engageant visuellement.
+                </div>
+                <div class="reco-impact">
+                    <span class="impact-label">Impact :</span>
+                    <span class="impact-value color-warning">Engagement social +</span>
+                </div>
+            </div>
+
+            <div class="reco-card medium">
+                <div class="reco-priority">&#128992; Priorit&eacute; moyenne</div>
+                <div class="reco-title">5. Corriger les CSS render-blocking</div>
+                <div class="reco-body">
+                    Inliner le CSS critique (above-the-fold) et charger les 10 CSS de composants en diff&eacute;r&eacute; avec <code>media="print" onload</code>. Google Fonts avec <code>display=swap</code> est d&eacute;j&agrave; en place.
+                </div>
+                <div class="reco-impact">
+                    <span class="impact-label">Impact :</span>
+                    <span class="impact-value color-success">FCP am&eacute;lior&eacute;</span>
+                </div>
+            </div>
+
+            <div class="reco-card medium">
+                <div class="reco-priority">&#128992; Priorit&eacute; moyenne</div>
+                <div class="reco-title">6. Am&eacute;liorer le maillage interne</div>
+                <div class="reco-body">
+                    Ajouter des liens internes vers les collections, le blog et les fiches produit. R&eacute;duire les liens externes non essentiels. Objectif : ratio 70% interne / 30% externe.
+                </div>
+                <div class="reco-impact">
+                    <span class="impact-label">Impact :</span>
+                    <span class="impact-value color-warning">Distribution du PageRank</span>
+                </div>
+            </div>
+
+            <div class="reco-card low">
+                <div class="reco-priority">&#128994; Priorit&eacute; basse</div>
+                <div class="reco-title">7. Optimiser le H1 pour le SEO</div>
+                <div class="reco-body">
+                    Remplacer ou compl&eacute;ter le H1 avec des mots-cl&eacute;s cibl&eacute;s tout en gardant l'aspect marketing. Exemple : inclure "p&acirc;te &agrave; tartiner prot&eacute;in&eacute;e" dans la structure de titres.
+                </div>
+                <div class="reco-impact">
+                    <span class="impact-label">Impact :</span>
+                    <span class="impact-value color-success">Pertinence s&eacute;mantique</span>
+                </div>
+            </div>
+
+            <div class="reco-card low">
+                <div class="reco-priority">&#128994; Priorit&eacute; basse</div>
+                <div class="reco-title">8. R&eacute;duire le DOM et optimiser les images</div>
+                <div class="reco-body">
+                    Convertir les images restantes en WebP/AVIF via Shopify CDN. Lazy-loader les images below-the-fold. Simplifier la structure HTML du body (122 enfants directs).
+                </div>
+                <div class="reco-impact">
+                    <span class="impact-label">Impact :</span>
+                    <span class="impact-value color-success">CLS + Vitesse</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== SUMMARY CTA ==================== -->
+<section class="summary-section">
+    <div class="container">
+        <div class="summary-card">
+            <h2>R&eacute;sum&eacute; de l'audit</h2>
+            <p>Le site Gourmandiz.co pr&eacute;sente de bonnes bases (Core Web Vitals corrects, HTTPS, donn&eacute;es structur&eacute;es) mais souffre de lacunes SEO majeures et d'un poids de page &eacute;lev&eacute; qui freinent sa visibilit&eacute; et ses conversions.</p>
+            <div class="summary-stats">
+                <div class="summary-stat">
+                    <div class="num color-danger">9</div>
+                    <div class="desc">Probl&egrave;mes identifi&eacute;s</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="num color-warning">5.1<span style="font-size:24px">MB</span></div>
+                    <div class="desc">Poids total de la page</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="num color-danger">87<span style="font-size:24px">%</span></div>
+                    <div class="desc">Images sans alt</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="num color-success">3/3</div>
+                    <div class="desc">Core Web Vitals OK</div>
+                </div>
+            </div>
+            <p style="font-size:15px;color:rgba(255,255,255,0.5);max-width:600px;margin:0 auto;">
+                En corrigeant les probl&egrave;mes prioritaires (meta description, alt images, scripts tiers), le site peut significativement am&eacute;liorer son positionnement Google et son taux de conversion.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+    <div class="container">
+        <p>Audit r&eacute;alis&eacute; par <span class="brand">FlowUP</span> &mdash; 15 mars 2026</p>
+        <p style="margin-top:8px;opacity:0.5">Donn&eacute;es collect&eacute;es via Lighthouse, Chrome DevTools Performance Trace & CrUX</p>
+    </div>
+</footer>
+
+</body>
+</html>
